@@ -227,3 +227,10 @@ WorkManager 주기 폴링에서 챙긴 것들:
 - **폴링이 죽으면 푸시가 살린다** — 클라 미기동 시 서버가 FCM 고스트 푸시로 타게팅 wake → expedited catch-up. 폴링(기본) + 푸시(복구)의 이중화.
 
 "주기적으로 서버에 물어보기"는 한 줄짜리 요구사항이지만, 기기의 전원·네트워크·OS 정책과 서버의 사정이 전부 변수인 환경에서는 **폴링이 안 도는 경우를 기본값으로 놓고, 안 돌았다는 사실조차 서버가 알 수 있게** 설계해야 한다는 게 이번 구현의 가장 큰 교훈이었다.
+
+## 참고 자료
+
+- [WorkManager 개요 — Android Developers](https://developer.android.com/topic/libraries/architecture/workmanager)
+- [커스텀 WorkManager 설정(온디맨드 초기화) — Android Developers](https://developer.android.com/develop/background-work/background-tasks/persistent/configuration/custom-configuration) : 자동 이니셜라이저 제거 + `Configuration.Provider` 공식 가이드
+- [WorkRequest 정의(주기 작업·제약·expedited) — Android Developers](https://developer.android.com/develop/background-work/background-tasks/persistent/getting-started/define-work) : 15분 최소 주기·Constraints·expedited work
+- [Android에서 FCM 메시지 수신 — Firebase](https://firebase.google.com/docs/cloud-messaging/android/receive) : 데이터 메시지(고스트 푸시) 수신 동작

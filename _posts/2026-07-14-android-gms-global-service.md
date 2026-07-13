@@ -122,3 +122,10 @@ flowchart TD
 - 대응은 3단계: **① `GoogleApiAvailability` 게이트 → ② 기능별 강등 경로 설계(코어는 AOSP만으로 돌게) → ③ 부재를 서버에 보고해 데이터화.**
 
 우리 앱의 다음 액션도 명확해졌다 — FCM 인프라 작업에 GMS 가용성 게이트를 함께 넣고, 지오펜스 셋업 플로우에 미지원 기기 분기를 추가하는 것. "글로벌 대응"은 거창한 포팅이 아니라 이 작은 게이트 하나에서 시작한다.
+
+## 참고 자료
+
+- [Google Play services 개요 — Google Developers](https://developers.google.com/android/guides/overview) : GMS/Play Services 구조와 가용성 체크 공식 가이드
+- [GoogleApiAvailability 레퍼런스 — Google Developers](https://developers.google.com/android/reference/com/google/android/gms/common/GoogleApiAvailability) : `isGooglePlayServicesAvailable` / `makeGooglePlayServicesAvailable`
+- [Android에서 FCM 메시지 수신 — Firebase](https://firebase.google.com/docs/cloud-messaging/android/receive)
+- [Health Connect 가이드 — Android Developers](https://developer.android.com/health-and-fitness/guides/health-connect) : provider 가용성(getSdkStatus) 분기

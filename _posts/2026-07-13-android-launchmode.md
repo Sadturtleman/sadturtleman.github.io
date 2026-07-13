@@ -111,3 +111,8 @@ adb shell dumpsys activity activities | grep -c "Hist  #.*MainActivity"  # 1이�
 - 인스턴스 중복 버그는 증상이 제각각(화면 고착, 이벤트 무반응)이라 원인을 못 찾기 쉽다 — `dumpsys activity` 로 인스턴스 수부터 세어보면 빠르다.
 
 한 줄짜리 수정이었지만, "API는 성공하는데 화면이 안 바뀐다"는 증상에서 태스크 스택까지 파고들게 해준 좋은 버그였다.
+
+## 참고 자료
+
+- [Tasks and the back stack — Android Developers](https://developer.android.com/guide/components/activities/tasks-and-back-stack) : 태스크·백스택·launchMode 4종의 공식 설명
+- [\<activity\> manifest element — Android Developers](https://developer.android.com/guide/topics/manifest/activity-element) : `android:launchMode` 속성 레퍼런스
