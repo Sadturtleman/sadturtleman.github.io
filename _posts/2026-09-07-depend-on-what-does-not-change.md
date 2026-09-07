@@ -50,7 +50,7 @@ BUILD SUCCESSFUL in 4s
 
 ## 처방 — 라우트만 따로 낸다
 
-화면끼리 실제로 주고받는 건 뭘까. `DetailScreen` 이라는 컴포저블 자체가 아니라 **"`/detail` 로 `id`를 들고 가라"는 사실**뿐이다. 그 사실만 담은 모듈을 따로 냈다.
+화면끼리 실제로 주고받는 건 뭘까. `DetailScreen` 이라는 컴포저블 자체가 아니라 **`/detail` 로 `id`를 들고 가라는 사실**뿐이다. 그 사실만 담은 모듈을 따로 냈다.
 
 ```kotlin
 // detail/navigation/src/.../DetailPage.kt — 이 모듈에 있는 유일한 파일, 32줄
