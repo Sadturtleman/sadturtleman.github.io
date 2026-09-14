@@ -1,6 +1,6 @@
 ---
 name: write-post
-description: 이 블로그(Chirpy/Jekyll)에 새 글을 작성할 때 사용. 사용자가 "블로그 글 써줘", "새 글 만들어줘", "포스트 작성", "글 초안" 등을 요청하면 발동. 파일명/머리말(front matter) 규칙을 강제하고, 공식 문서를 첨부하며, 작성 후 자동 배포 → 실제 사이트 검수 → 수정까지 수행한다.
+description: 이 블로그(Chirpy/Jekyll)에 새 글을 작성할 때 사용. 사용자가 "블로그 글 써줘", "새 글 만들어줘", "포스트 작성", "글 초안" 등을 요청하면 발동. 파일명/머리말(front matter) 규칙을 강제하고, 공식 문서를 첨부하며, 핵심 다이어그램은 archify로 만들고, 초안은 humanizer로 다듬은 뒤, 자동 배포 → 실제 사이트 검수 → 수정까지 수행한다.
 ---
 
 # 블로그 글쓰기 (Sadturtleman's blog)
@@ -23,8 +23,8 @@ description: 이 블로그(Chirpy/Jekyll)에 새 글을 작성할 때 사용. �
 
 1. **현재 레포에서 재료를 모은다** — 관련 코드/파일, 최근 커밋(`git log`, `git diff`), 에러·해결 과정 등 글감을 현재 작업 디렉터리에서 읽어 정리한다.
 2. **출처를 기록한다** — 현재 레포 이름과 GitHub URL을 확인(`git remote get-url origin`)하고, 글에서 참고한 파일/커밋을 링크하거나 코드 스니펫으로 인용한다. (예: `[user/repo](https://github.com/user/repo)`, 특정 파일은 `blob/<커밋>/경로` 링크)
-3. **글을 블로그 레포에 쓴다** — `/Users/adamatia123/Documents/GitHub/sadturtleman.github.io/_posts/YYYY-MM-DD-제목.md` 로 생성한다(절대 경로).
-4. **검증·발행** — 블로그 레포 안에서 빌드 확인 후, §7 절차대로 자동 배포·검수한다. (현재 작업 중인 레포에는 글을 커밋하지 않는다.)
+3. **글을 블로그 레포에 쓴다** — `/Users/adamatia123/Documents/GitHub/sadturtleman.github.io/_posts/YYYY-MM-DD-제목.md` 로 생성한다(절대 경로). archify 산출물도 같은 레포의 `assets/diagrams/` 에 넣는다.
+4. **검증·발행** — 블로그 레포 안에서 빌드 확인 후, §8 절차대로 자동 배포·검수한다. (현재 작업 중인 레포에는 글을 커밋하지 않는다.)
 
 > 코드/커밋을 인용할 때는 비공개 레포·민감정보(키, 토큰, 내부 경로)가 공개 블로그에 노출되지 않도록 한 번 더 점검한다.
 {: .prompt-warning }
@@ -67,17 +67,59 @@ mermaid: true
 
 ## 4. 필수 포함 요소 (예외 없음)
 
-모든 글에는 **반드시** 다음 두 가지를 포함한다. 주제상 어색하더라도 억지로 끼워넣지 말고, 주제를 설명·보강하는 형태로 자연스럽게 넣는다.
+모든 글에는 **반드시** 다음을 포함한다. 주제상 어색하더라도 억지로 끼워넣지 말고, 주제를 설명·보강하는 형태로 자연스럽게 넣는다.
 
 ### (1) 예시 코드 — 최소 1개
 - 펜스에 언어를 지정한 실제 동작하는 코드 블록을 넣는다. (` ```python `, ` ```bash `, ` ```js ` 등)
 - 코드만 던지지 말고 한두 줄로 무엇을 하는 코드인지 설명을 붙인다.
 - 코딩과 무관한 주제라도, 설정 예시·명령어·의사코드(pseudocode)·데이터 예시 형태로라도 코드 블록을 넣는다.
 
-### (2) 다이어그램 — 최소 1개 (Mermaid)
-- 머리말에 **`mermaid: true`** 를 반드시 추가한다(이게 없으면 렌더링되지 않음).
-- 본문에 ` ```mermaid ` 코드 블록으로 다이어그램을 넣는다. 흐름/구조/관계/순서를 시각화한다.
-- 주제에 맞는 종류를 고른다: 순서도(`flowchart`), 시퀀스(`sequenceDiagram`), 상태(`stateDiagram-v2`), 클래스/ERD, 간트 등.
+### (2) 다이어그램 — 최소 1개 (archify 주력 / Mermaid 보조)
+
+글의 **핵심 구조 다이어그램 1개**는 `archify` 스킬로 만든다. 단계가 서넛뿐인 곁가지 그림은 Mermaid 코드 블록으로 충분하다.
+
+#### archify로 핵심 다이어그램 만들기
+
+1. 종류를 고른다 — `architecture`(구성요소·경계), `workflow`(프로세스·게이트), `sequence`(호출 순서), `dataflow`(파이프라인), `lifecycle`(상태 전이). 애매하면 `node bin/archify.mjs guide "<상황>" --json` 으로 물어본다.
+2. archify 스킬의 절차대로 JSON을 작성하고 `validate` 를 showcase로 통과시킨다. 그다음 **블로그 레포의 `assets/diagrams/` 로 곧장 deliver** 한다.
+
+```bash
+ARCHIFY=~/.claude/skills/archify
+BLOG=/Users/adamatia123/Documents/GitHub/sadturtleman.github.io
+mkdir -p "$BLOG/assets/diagrams"
+node "$ARCHIFY/bin/archify.mjs" deliver workflow spec.json \
+  "$BLOG/assets/diagrams/2026-09-14-my-slug.html" --quality showcase --json
+```
+
+- 산출물 파일명은 **글 파일과 같은 `YYYY-MM-DD-슬러그`** 를 쓴다. 한 글에 둘 이상이면 `-1`, `-2` 를 붙인다.
+- JSON 원본(`spec.json`)은 스크래치패드에 두고 블로그 레포에 커밋하지 않는다. 커밋하는 것은 산출물 HTML뿐이다.
+- deliver가 0이 아닌 코드로 끝나면 실패다. 진단을 고쳐 다시 돌린다. 실패한 산출물을 그대로 커밋하지 않는다.
+
+3. 본문에는 iframe으로 넣고 바로 아래에 전체 화면 링크를 단다. iframe이 막힌 리더나 RSS에서는 링크만 보인다.
+
+```markdown
+<iframe src="/assets/diagrams/2026-09-14-my-slug.html"
+        title="요청 처리 흐름 다이어그램"
+        loading="lazy" width="100%" height="560"
+        style="border:1px solid var(--main-border-color); border-radius:6px;"></iframe>
+
+> 잘려 보이면 [전체 화면으로 열기](/assets/diagrams/2026-09-14-my-slug.html).
+{: .prompt-tip }
+```
+
+- `title` 속성은 대체 텍스트 역할을 하므로 반드시 채운다.
+- 높이는 560px 근처에서 시작하고, 배포 후 실제 화면을 보고 조정한다.
+- archify HTML은 테마 전환·확대/축소·검색을 자체 제공한다. 스크린샷을 따로 뜨지 않는다.
+- 다이어그램 라벨에도 4-(4)가 적용된다. 도메인 용어를 라벨에 그대로 쓰지 않는다.
+
+> `assets/diagrams/*.html` 도 `_site` 안으로 복사되므로 배포 시 htmlproofer 검사 대상이다. 푸시 전에 로컬에서 htmlproofer를 돌려 본다(7.1).
+{: .prompt-warning }
+
+#### Mermaid (보조)
+
+- 머리말의 **`mermaid: true`** 는 계속 유지한다(이게 없으면 렌더링되지 않음).
+- 짧은 흐름은 ` ```mermaid ` 코드 블록으로 그대로 넣는다.
+- 종류: 순서도(`flowchart`), 시퀀스(`sequenceDiagram`), 상태(`stateDiagram-v2`), 클래스/ERD, 간트 등.
 
 예시:
 
@@ -130,7 +172,29 @@ flowchart TD
   종류: `tip`(초록) / `info`(파랑) / `warning`(노랑) / `danger`(빨강)
 - 링크·외부 참조는 정확히. (배포 시 htmlproofer가 깨진 내부 링크/이미지를 검사하므로 경로 오타에 주의)
 
-## 6. 마무리 체크리스트
+## 6. 문체 다듬기 — humanizer (필수)
+
+초안이 끝나면 **커밋 전에 `humanizer` 스킬을 파일 모드로 한 번 돌린다.** 이 블로그는 내가 겪은 일을 내 말로 쓰는 곳이라, AI가 쓴 티가 나면 글의 값어치가 깎인다.
+
+- 대상은 방금 만든 `_posts/YYYY-MM-DD-제목.md` 하나다. 파일 모드는 산문만 고치고 코드 블록, 인라인 코드, 명령어, 경로, 머리말(YAML), 링크 주소는 그대로 둔다.
+- 문체 표본으로 최근 글 두세 개(`_posts/` 의 최신 파일)를 같이 준다. 새 글이 기존 글과 같은 목소리로 읽혀야 한다.
+- 한국어 글이므로 영어 관용구를 직역한 표현도 함께 잡는다. "~뿐만 아니라 ~이다", "결국 중요한 것은", 소제목마다 붙는 한 줄 마무리 같은 것들이다.
+- 고친 뒤 **사실이 그대로인지 대조한다.** 수치, 버전, API 이름, 링크는 초안과 같아야 한다. 문장을 합치는 과정에서 조건이나 예외가 빠지는 일이 있다.
+
+다음 다섯은 남아 있으면 무조건 고친다.
+
+| 패턴 | 이 블로그에서 나오는 모습 |
+|---|---|
+| not X but Y | "단순한 버그가 아니라 설계 문제였다" 가 문단마다 반복 |
+| 한 줄 마무리 | 소제목마다 "결국 핵심은 ~다" 로 닫음 |
+| 대시 남발 | 한 문단에 `—` 가 세 번 |
+| 억지 삼단 | 이유가 둘뿐인데 셋으로 늘림 |
+| 굵은 라벨 | 목록 항목마다 굵은 글씨 + 콜론으로 시작 |
+
+> 다이어그램 라벨과 코드 주석은 humanizer가 건드리지 않는다. 거기 있는 어색한 문장은 직접 고친다.
+{: .prompt-info }
+
+## 7. 마무리 체크리스트
 
 글을 완성한 뒤 확인:
 - [ ] 파일명이 `_posts/YYYY-MM-DD-제목.md` 형식인가
@@ -138,16 +202,18 @@ flowchart TD
 - [ ] `categories` 가 1~2개(계층), `tags` 가 기존 것과 일관적인가
 - [ ] 첫 문단이 글의 목적을 드러내는가
 - [ ] **예시 코드 블록이 1개 이상 있고 언어가 지정**되어 있는가
-- [ ] **Mermaid 다이어그램이 1개 이상 있고, 머리말에 `mermaid: true` 가 있는가**
+- [ ] **핵심 다이어그램이 archify로 만들어져 `assets/diagrams/` 에 있고**, 본문에 iframe과 전체 화면 링크가 둘 다 있는가
+- [ ] Mermaid 보조 다이어그램을 썼다면 머리말에 `mermaid: true` 가 있는가
+- [ ] **humanizer 파일 모드를 돌렸고**, 그 뒤 수치·버전·API 이름·링크가 초안과 같은가 (§6)
 - [ ] **주제 관련 공식 문서 링크가 첨부**되어 있고, URL이 실재 확인됐는가
 - [ ] **도메인을 몰라도 읽히는가** — 첫 문단이 일반적인 문제로 열리고, 도메인 용어가 처음 나올 때 정의됐는가 (4-(4))
 - [ ] 내부 링크/이미지 경로가 실제로 존재하는가
 
-## 7. 발행 — 자동 배포 후 실사이트 검수 (필수 루프)
+## 8. 발행 — 자동 배포 후 실사이트 검수 (필수 루프)
 
 글 작성이 끝나면 **사용자에게 따로 묻지 않고 아래 순서를 끝까지 수행**한다. "파일 생성"이 아니라 "배포된 페이지가 읽기에 문제없음"까지가 이 스킬의 완료 조건이다.
 
-### 7.1 로컬 빌드 검증
+### 8.1 로컬 빌드 검증
 ```bash
 # 시스템 Ruby(4.x)는 Gemfile(~> 3.1)과 안 맞음 → homebrew ruby@3 사용
 RUBY=/opt/homebrew/opt/ruby@3/bin
@@ -156,30 +222,43 @@ PATH="$RUBY:$PATH" bundle exec jekyll build   # 미래 날짜 글 검증은 --fu
 ```
 - "has a future date" 로 스킵되면 date 확인(발행 의도된 미래 날짜인지, 시간이 몇 분 앞서간 실수인지).
 
-### 7.2 자동 커밋·푸시
+배포 CI와 같은 링크 검사를 미리 돌린다.
+
+```bash
+PATH="$RUBY:$PATH" bundle exec htmlproofer _site --disable-external \
+  --ignore-files "/assets\/diagrams\//" \
+  --ignore-urls "/^http:\/\/127.0.0.1/,/^http:\/\/0.0.0.0/,/^http:\/\/localhost/"
+```
+
+`assets/diagrams/` 는 검사에서 제외한다. archify 뷰어는 런타임에 주소를 채우는 빈 `<a>` 를 포함하는데 htmlproofer가 이것을 깨진 링크로 본다. 같은 제외가 `.github/workflows/pages-deploy.yml` 에도 들어가 있다. 우리가 쓴 글의 링크는 그대로 검사된다.
+
+### 8.2 자동 커밋·푸시
 - 커밋 메시지: `post: <제목 요약>` (기존 컨벤션).
 - `main` 푸시 → GitHub Actions가 자동 빌드·배포.
 
-### 7.3 배포 완료 대기
+### 8.3 배포 완료 대기
 ```bash
 gh run watch $(gh run list --repo Sadturtleman/sadturtleman.github.io --limit 1 --json databaseId --jq '.[0].databaseId') --repo Sadturtleman/sadturtleman.github.io --exit-status
 ```
 (또는 1~2분 대기 후 다음 단계에서 페이지 존재로 확인)
 
-### 7.4 실사이트 검수 — 배포된 페이지를 직접 읽는다
+### 8.4 실사이트 검수 — 배포된 페이지를 직접 읽는다
 `https://sadturtleman.github.io/posts/<파일명의 제목부분>/` 을 WebFetch(또는 curl)로 가져와 **독자 입장에서** 점검한다:
 
 - [ ] 글이 실제로 노출되는가 (404면 date/파일명 문제)
-- [ ] **Mermaid가 그림으로 렌더링되는가** — HTML에 다이어그램 텍스트가 `<pre>` 코드로 그대로 남아 있으면 실패(머리말 `mermaid: true` 누락 또는 문법 오류)
+- [ ] **archify iframe이 실제로 그려지는가** — 빈 사각형이면 경로 오타이거나 파일이 커밋에서 빠진 것이다. 높이가 모자라 잘리면 `height` 를 조정한다
+- [ ] **전체 화면 링크(`/assets/diagrams/...`)가 200인가**, 그 페이지에서 테마 전환과 확대/축소가 동작하는가
+- [ ] **Mermaid를 썼다면 그림으로 렌더링되는가** — HTML에 다이어그램 텍스트가 `<pre>` 코드로 그대로 남아 있으면 실패(머리말 `mermaid: true` 누락 또는 문법 오류)
 - [ ] 코드 블록에 언어 하이라이트가 적용됐는가 (`language-kotlin` 등 클래스 존재)
 - [ ] 표·프롬프트 박스·목차(TOC)가 깨지지 않았는가
 - [ ] 제목/본문에 오타, 어색한 문장, 잘린 문단이 없는가
 - [ ] **도메인을 모르는 독자로 읽어 본다** — 첫 화면만 보고 무슨 문제를 푸는 글인지 알 수 있는가, 정의 없이 등장하는 도메인 용어가 있는가
+- [ ] **§6의 다섯 패턴이 남아 있지 않은가** — not X but Y, 한 줄 마무리, 대시 남발, 억지 삼단, 굵은 라벨
 - [ ] 첨부한 링크(공식 문서 포함)가 전부 200인가
 
-### 7.5 문제 발견 시 수정 루프
-- 발견한 문제를 수정 → 재커밋·재푸시 → 7.3~7.4 재수행. 문제가 없어질 때까지 반복(통상 1회면 충분).
+### 8.5 문제 발견 시 수정 루프
+- 발견한 문제를 수정 → 재커밋·재푸시 → 8.3~8.4 재수행. 문제가 없어질 때까지 반복(통상 1회면 충분).
 - 최종 보고에는 **배포 URL + 검수 결과(고친 것 포함)** 를 요약한다.
 
-> 미래 날짜(예약 발행) 글은 배포 사이트에 아직 안 뜨므로 7.4를 수행할 수 없다. 이 경우 로컬 `--future` 빌드 산출물(`_site/posts/...`)로 동일 항목을 검수하고, "발행일에 push 트리거가 한 번 필요하다"는 사실을 사용자에게 고지한다.
+> 미래 날짜(예약 발행) 글은 배포 사이트에 아직 안 뜨므로 8.4를 수행할 수 없다. 이 경우 로컬 `--future` 빌드 산출물(`_site/posts/...`)로 동일 항목을 검수하고, "발행일에 push 트리거가 한 번 필요하다"는 사실을 사용자에게 고지한다.
 {: .prompt-warning }
