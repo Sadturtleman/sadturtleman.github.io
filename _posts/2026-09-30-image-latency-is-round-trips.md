@@ -113,15 +113,25 @@ done
 
 ②는 파일 크기를 그대로 두고 경로만 줄였는데 사진 구간이 534ms에서 201ms가 됐다. 기준에서 시간을 먹던 게 무엇인지는 요청 흐름을 그려 보면 보인다.
 
-<iframe src="/assets/diagrams/2026-09-30-image-latency-is-round-trips.html"
-        title="프로필 사진을 받는 세 가지 경로 시퀀스 다이어그램"
-        loading="lazy" width="100%" height="620"
+<iframe src="/assets/diagrams/2026-09-30-image-latency-is-round-trips-1.html"
+        title="지금 경로: 사진 한 장에 왕복 두 번이 드는 시퀀스 다이어그램"
+        loading="lazy" width="100%" height="520"
         style="border:1px solid var(--main-border-color); border-radius:6px;"></iframe>
 
-> 잘려 보이면 [전체 화면으로 열기](/assets/diagrams/2026-09-30-image-latency-is-round-trips.html).
+> 잘려 보이면 [전체 화면으로 열기](/assets/diagrams/2026-09-30-image-latency-is-round-trips-1.html).
 {: .prompt-tip }
 
 API가 준 사진 주소로 요청하면 사진이 아니라 302 응답이 온다. 서버가 요청마다 파일 저장소용 [서명된 임시 주소](https://docs.aws.amazon.com/AmazonS3/latest/userguide/ShareObjectPreSignedURL.html)를 새로 만들어 그리로 보내는 것이다. 응답에는 `cache-control: no-store` 가 붙어 있어서 API 앞단 CDN도 캐시하지 않는다. 응답 헤더의 `cf-cache-status: BYPASS` 는 [원본 응답 헤더 때문에 캐시하지 않았다](https://developers.cloudflare.com/cache/concepts/cache-responses/)는 뜻이다. 앱은 그 302를 받은 뒤에야 저장소로 새 연결을 맺는다.
+
+②와 ③은 이 두 번의 왕복을 한 번으로 줄인다. ②는 서명된 주소를 처음부터 앱에 주고, ③은 서명이 필요 없는 고정 주소를 가까운 CDN이 캐시에서 바로 내준다.
+
+<iframe src="/assets/diagrams/2026-09-30-image-latency-is-round-trips-2.html"
+        title="개선 경로: 저장소 직접 요청과 CDN 캐시 히트 시퀀스 다이어그램"
+        loading="lazy" width="100%" height="520"
+        style="border:1px solid var(--main-border-color); border-radius:6px;"></iframe>
+
+> 잘려 보이면 [전체 화면으로 열기](/assets/diagrams/2026-09-30-image-latency-is-round-trips-2.html).
+{: .prompt-tip }
 
 구간을 나눠 보는 데는 curl의 [`-w` 출력](https://everything.curl.dev/usingcurl/verbose/writeout.html)이면 충분했다.
 
