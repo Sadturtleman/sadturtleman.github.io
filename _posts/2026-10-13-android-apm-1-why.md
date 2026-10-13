@@ -53,7 +53,7 @@ APM(Application Performance Monitoring)은 앱이 실제로 돌 때 무엇이 �
 
 <iframe src="/assets/diagrams/2026-10-13-android-apm-1-why.html"
         title="Android APM 구조 다이어그램: 빌드 때 화면 목록을 만들고, 기기 실행 기록과 로컬 서버에서 합쳐 대시보드로 보여준다"
-        loading="lazy" width="100%" height="600"
+        loading="lazy" width="100%" height="780"
         style="border:1px solid var(--main-border-color); border-radius:6px;"></iframe>
 
 > 잘려 보이면 [전체 화면으로 열기](/assets/diagrams/2026-10-13-android-apm-1-why.html).
@@ -87,8 +87,8 @@ plugins {
 
 ```mermaid
 flowchart TD
-    A["유저 로드 지도<br/>화면과 화면 이동을 그래프로"] -->|화면 상태 하나 선택| B["인바운드 경로·기기별 트레이스<br/>이 상태로 들어오는 경로와 측정값"]
-    B -->|경로 하나 선택| C["함수 호출·자원 시계열<br/>호출 막대와 CPU·메모리 그래프"]
+    A["유저 로드 지도<br/>화면과 화면 이동을 그래프로"] -->|화면 상태 하나 선택| B["인바운드 경로·기기별 트레이스<br/>들어오는 경로별 측정값"]
+    B -->|경로 하나 선택| C["함수 호출·자원 시계열<br/>호출 막대 + 자원 그래프"]
     D["구성 탐색<br/>모듈 의존성·권한·리소스"]
 ```
 
