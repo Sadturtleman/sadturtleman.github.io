@@ -53,7 +53,7 @@ APM(Application Performance Monitoring)은 앱이 실제로 돌 때 무엇이 �
 
 <iframe src="/assets/diagrams/2026-10-13-android-apm-1-why.html"
         title="Android APM 구조 다이어그램: 빌드 때 화면 목록을 만들고, 기기 실행 기록과 로컬 서버에서 합쳐 대시보드로 보여준다"
-        loading="lazy" width="100%" height="780"
+        loading="lazy" width="100%" height="880"
         style="border:1px solid var(--main-border-color); border-radius:6px;"></iframe>
 
 > 잘려 보이면 [전체 화면으로 열기](/assets/diagrams/2026-10-13-android-apm-1-why.html).
