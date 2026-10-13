@@ -131,6 +131,24 @@ IR이 아무리 많은 걸 담고 있어도 컴파일러가 아는 것 이상은
 
 SDUI는 서버가 내려주는 데이터로 화면을 조립하는 방식이고, AAR은 미리 빌드해 둔 안드로이드 라이브러리 파일이다. 마지막 두 줄은 성격이 조금 다르다. 앞의 넷은 정적 분석이 원리상 못 하는 일이고, 화면 판정이 애매한 건 기준을 정해야 하는 문제고, 탐색 방식은 범위를 아직 안 넓힌 것이다.
 
+"원리상"이라고 쓴 데는 근거가 있다. 이 문제는 1936년에 앨런 튜링이 이미 풀어 뒀다. 풀 수 없다는 쪽으로. [정지 문제](https://ko.wikipedia.org/wiki/%EC%A0%95%EC%A7%80_%EB%AC%B8%EC%A0%9C)는 아무 프로그램이나 받아서 그게 언젠가 멈추는지 판정해 주는 알고리즘은 존재할 수 없다는 증명이다. 화면 수집기에 옮기면 이런 코드가 된다.
+
+```kotlin
+entryProvider {
+    entry<Home> { HomeScreen() }
+
+    if (thisLoopEventuallyEnds(input)) {
+        // 이 화면이 실제로 등록되는지 확실히 알려면 위 함수가 끝나는지부터 알아야 한다.
+        // 그걸 알아내는 수집기를 만들면 튜링이 틀렸다는 뜻이니, 블로그 말고 논문을 써야 한다
+        entry<Secret> { SecretScreen() }
+    }
+}
+```
+
+[라이스 정리](https://en.wikipedia.org/wiki/Rice%27s_theorem)는 여기서 한 걸음 더 나간다. "이 코드가 실행되는가", "이 화면이 언젠가 뜨는가"처럼 프로그램이 실제로 하는 일에 관한 성질은 일반적으로 다 판정할 수 없다. 그러니 "실제로 뜰 수 있는 화면만 정확히 골라내는 도구"를 만들었다는 사람을 만나면, 먼저 정지 문제를 어떻게 피했는지부터 물어보면 된다.
+
+그래서 수집기는 한발 물러서서 "등록될 수 있는 자리"를 전부 모은다. 조건을 계산하지 않고 두 분기를 다 남기는 게 그 방법이다. 이러면 실제로는 한 번도 안 뜰지 모르는 `SecretScreen` 도 후보에 들어오는데, 그건 나중에 실행 기록과 사람 검토가 걸러 낸다. 1편에서 말한 99% 목표가 "실제로 뜨는 화면"이 아니라 "코드에 정의된 화면"을 기준으로 잡혀 있는 것도 이 때문이다. 도달할 수 있는지는 따로 표시한다.
+
 빌드 방식에서 오는 한계도 하나 있다. Kotlin은 [증분 컴파일](https://kotlinlang.org/docs/gradle-compilation-and-caches.html)을 하기 때문에 파일 하나를 고치면 그 파일과 영향받은 파일만 다시 컴파일한다. 이때 IR 콜백에 들어오는 건 모듈의 일부다. 지금 probe 결과도 마지막 컴파일 한 번의 스냅샷이라, 이걸 모듈 전체 목록으로 쓰면 고치지 않은 파일의 화면이 사라진다.
 
 ## 그래서 최대한 찾으려고 정한 것들
@@ -260,3 +278,5 @@ val provider = entryProvider<NavKey> {
 - [Using Compose in Views](https://developer.android.com/develop/ui/compose/migrate/interoperability-apis/compose-in-views)
 - [AbstractComposeView](https://developer.android.com/reference/kotlin/androidx/compose/ui/platform/AbstractComposeView)
 - [Gradle: Incremental build](https://docs.gradle.org/current/userguide/incremental_build.html)
+- [정지 문제 (위키백과)](https://ko.wikipedia.org/wiki/%EC%A0%95%EC%A7%80_%EB%AC%B8%EC%A0%9C)
+- [Rice's theorem (Wikipedia)](https://en.wikipedia.org/wiki/Rice%27s_theorem)
