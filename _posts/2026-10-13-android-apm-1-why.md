@@ -85,6 +85,11 @@ plugins {
 
 `apmRunDebug` 가 끝나면 브라우저로 localhost를 연다. 대시보드는 네 화면으로 구성하기로 정했고, 앞의 셋은 위에서 아래로 파고드는 순서다.
 
+화면 구성은 [Figma 시안](https://www.figma.com/design/qGdhVOiSGSh9VUAMFfl40h/APM?node-id=132-12445)으로 먼저 확정해 두었다. 아래 이미지는 그 최종안에서 가져왔다.
+
+> 시안에 나오는 앱(ShopSample), 화면, 수치는 전부 화면 구성을 보여주려고 만든 예시 데이터다. 실제로 잰 값이 아니다.
+{: .prompt-info }
+
 ```mermaid
 flowchart TD
     A["유저 로드 지도<br/>화면과 화면 이동을 그래프로"] -->|화면 상태 하나 선택| B["인바운드 경로·기기별 트레이스<br/>들어오는 경로별 측정값"]
@@ -94,11 +99,23 @@ flowchart TD
 
 유저 로드 지도는 화면을 노드로, 화면 이동을 화살표로 그린다. 노드마다 로딩·내용·오류 같은 상태가 따로 달려 있어서 "이 화면의 오류 상태"처럼 상태 단위로 골라 들어갈 수 있다. 여기서 화면들을 골라 분석 범위를 정하는데, 이 범위를 유저 로드라고 부른다.
 
+![유저 로드 지도 시안. 홈, 검색 결과, 상품 상세, 장바구니, 로그인, 주문·결제 여섯 화면이 화살표로 이어지고, 각 화면 카드 오른쪽에 로딩·콘텐츠·오류 같은 상태 목록이 붙어 있다](/assets/img/android-apm/1-road-map.png){: w="1680" h="1080" }
+_유저 로드 지도. 예시 앱의 6개 화면과 29개 상태. 상품 상세의 "콘텐츠" 상태를 고른 모습이다_
+
 상태를 고르면 그 상태로 들어오는 모든 경로가 한 페이지에 나온다. 홈에서 버튼을 눌러 들어온 경우, 알림에서 바로 들어온 경우가 따로 줄을 서고, 각 줄에 측정값과 측정한 기기 정보가 붙는다. 여러 기기에서 잰 결과는 섞지 않고 기기별로 고른다.
+
+![인바운드 경로 시안. 상품 상세 콘텐츠 상태로 들어오는 경로 8개가 표로 나열되고, 각 줄에 TTI, 앱 메모리, CPU, 디스크, Jank 값이 있다. 위쪽에서 Pixel 8, Galaxy S23, Galaxy A54 중 측정 기기를 고르고, 아래에는 자원 변화 그래프와 기기 성능 정보가 있다](/assets/img/android-apm/2-inbound-trace.png){: w="1920" h="1440" }
+_인바운드 경로·기기별 트레이스. 마지막 줄(R08)은 수집된 기록이 없어 0이 아니라 "미측정"으로 표시된다_
 
 경로 하나를 누르면 시계열이 열린다. 왼쪽에는 화면 UI가 있고 각 UI 조각이 다 그려진 시점이 시간축에 화살표로 이어진다. 가운데에는 함수 호출이 실행된 순서대로 막대로 늘어서는데, 같은 함수를 열 번 불렀으면 막대도 열 개다. "10회 호출, 평균 3ms"로 뭉뚱그리지 않는다. 오른쪽에는 CPU, 메모리, 힙, 디스크가 지표마다 따로 한 줄씩 그려지고, 함수 하나를 고르면 모든 그래프에서 같은 시간 구간이 강조된다. 네트워크 요청은 첫 바이트가 오기까지의 시간(TTFB)과 함께 해당 호출에 붙는다.
 
+![함수 호출·자원 시계열 시안. 왼쪽에 상품 상세 화면 UI, 가운데에 UI 완성 시점 화살표와 코루틴별 함수 호출 막대, GET /products/42 요청 상세가 있고, 오른쪽에 CPU, 앱 메모리, 힙, 기기 RAM, 디스크 I/O, Jank 그래프가 지표별로 따로 그려져 있다](/assets/img/android-apm/3-call-timeline.png){: w="1920" h="1568" }
+_함수 호출·자원 시계열. "검색 결과 → 상품 상세" 경로 하나를 연 모습이다_
+
 구성 탐색은 측정과는 별개로, 프로젝트의 모듈 의존성을 같은 그래프 방식으로 보여주고 모듈을 누르면 외부 라이브러리, 권한, 리소스, 테스트 구성을 보여준다.
+
+![구성 탐색 시안. :app 모듈에서 :feature:product, :core:model, :data 모듈로 implementation 의존성 화살표가 이어지고, 오른쪽 패널에 권한 2개, Android 리소스 326개, 테스트 42개가 요약되어 있다](/assets/img/android-apm/4-config.png){: w="1920" h="1080" }
+_구성 탐색. 프로젝트 안의 모듈만 그래프 노드로 그리고, 외부 패키지는 모듈을 눌렀을 때 펼친다_
 
 ## 미리 정해 둔 규칙: 모르는 건 모른다고 표시한다
 
@@ -150,6 +167,7 @@ flowchart TD
 ## 참고 자료
 
 - [android-apm-tool/android-apm](https://github.com/android-apm-tool/android-apm): 이 시리즈의 레포. 설계 문서는 `docs/` 에 있다
+- [Figma: APM 화면 시안 최종안](https://www.figma.com/design/qGdhVOiSGSh9VUAMFfl40h/APM?node-id=132-12445)
 - [Android Studio: Profile your app performance](https://developer.android.com/studio/profile)
 - [Perfetto 문서](https://perfetto.dev/docs/)
 - [Macrobenchmark 개요](https://developer.android.com/topic/performance/benchmarking/macrobenchmark-overview)
