@@ -35,6 +35,40 @@ _핵심 배치와 동선을 보여 주기 위해 실험 화면을 다시 그렸�
 
 두 안에서 사용자는 공유 전에 친구가 받는 내용을 확인한다. 친구에게 전달되는 내용은 루틴 이름과 실패가 확정됐다는 사실이고, 알림은 친구가 초대를 수락한 뒤 시작된다. 이렇게 맞춰야 화면을 어떻게 보여 줬는지의 차이를 비교하기 쉽다.
 
+### Figma 원본 시안
+
+아래 시안의 이름과 화면 속 숫자는 예시다.
+
+**A · 방 상단 카드와 공유 확인**
+
+<div class="d-flex flex-wrap justify-content-center gap-3 my-3">
+  <figure class="text-center" style="flex: 1 1 160px; max-width: 220px;">
+    <img src="/assets/img/ruleup-watcher-ab-test/figma-a-room.png" width="360" height="800" loading="lazy" alt="방 상단의 상시 초대 카드">
+    <figcaption>방을 열면 상단에서 친구에게 응원을 부탁할 수 있다.</figcaption>
+  </figure>
+  <figure class="text-center" style="flex: 1 1 160px; max-width: 220px;">
+    <img src="/assets/img/ruleup-watcher-ab-test/figma-a-share.png" width="360" height="800" loading="lazy" alt="공유 전 친구가 받는 정보를 안내하는 화면">
+    <figcaption>공유하기 전에 친구에게 어떤 알림이 가는지 보여 준다. 이 확인 화면은 두 안에 공통으로 적용한다.</figcaption>
+  </figure>
+</div>
+
+**C · 첫 안내에서 연결까지**
+
+<div class="d-flex flex-wrap justify-content-center gap-3 my-3">
+  <figure class="text-center" style="flex: 1 1 160px; max-width: 220px;">
+    <img src="/assets/img/ruleup-watcher-ab-test/figma-c-intro.png" width="360" height="800" loading="lazy" alt="인증 준비 완료 배지가 붙은 첫 초대 안내">
+    <figcaption>인증 준비를 마치면 첫 안내가 뜬다.</figcaption>
+  </figure>
+  <figure class="text-center" style="flex: 1 1 160px; max-width: 220px;">
+    <img src="/assets/img/ruleup-watcher-ab-test/figma-c-pending.png" width="360" height="800" loading="lazy" alt="초대 링크를 만든 뒤 방에 표시되는 수락 대기 카드">
+    <figcaption>링크를 만든 뒤 방에서 수락을 기다리는 상태를 볼 수 있다.</figcaption>
+  </figure>
+  <figure class="text-center" style="flex: 1 1 160px; max-width: 220px;">
+    <img src="/assets/img/ruleup-watcher-ab-test/figma-c-connected.png" width="360" height="800" loading="lazy" alt="친구가 초대를 수락한 뒤 방에 표시되는 연결 완료 카드">
+    <figcaption>친구가 수락하면 방에 연결 상태가 표시된다.</figcaption>
+  </figure>
+</div>
+
 A와 C 모두 기존 화면을 바꾼 안이다. 이 실험에서 답할 질문은 **두 방식 중 어느 쪽이 초대를 더 많이 만드는가**다. 기존 화면 대비 개선 폭을 알려면 기존 화면을 대조군으로 넣은 별도 비교가 필요하다.
 
 ## 초대 링크가 만들어진 기기를 센다
@@ -71,5 +105,8 @@ C의 클릭만 늘고 초대 생성률이 비슷하다면, 안내를 알아차�
 ## QA에서 확인한 건 결과를 셀 수 있다는 것
 
 스테이징에서 A와 C를 각각 실행해 배정, 화면 노출, 초대 생성 성공이 Amplitude의 QA 프로젝트에 들어오는 것을 확인했다. C에서 인증 준비를 끝낸 뒤 바로 들어왔는데도 기존 방 재진입으로 기록되는 경우를 발견해 수정했다. 다시 시험했을 때 완료 배지가 뜨고, 노출 이벤트에도 `new_ready`가 들어왔다.
+
+![에뮬레이터에서 촬영한 C의 첫 안내와 인증 준비 완료 배지](/assets/img/ruleup-watcher-ab-test/app-c-ready.png){: width="1080" height="760" loading="lazy" }
+_Android QA 앱에서 인증 준비 직후 방을 열었을 때 실제로 표시된 C 안내다._
 
 이 글은 실험을 설계하고 측정 경로를 검증한 기록이다. 글을 쓰는 시점에 운영 실험은 시작 전이라 어느 화면이 더 효과적인지는 아직 모른다. 운영 결과를 볼 때는 처음 정한 질문인 **“준비가 끝난 방장이 7일 안에 친구에게 보낼 초대를 만들었나”**로 돌아가면 된다.
