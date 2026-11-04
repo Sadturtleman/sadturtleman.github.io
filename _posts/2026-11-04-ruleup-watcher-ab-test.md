@@ -14,7 +14,7 @@ tags: [ruleup, ab-test, amplitude, remote-config]
 
 관리 화면 진입에 가까운 화면 표시 이벤트에서 고유 사용자를 세어 봤다. 관리 화면에 들어온 규모는 챌린지를 수행한 규모의 **약 10%**였다. 감시자 등록 규모는 관리 화면 진입 규모의 **약 3%**였다. 두 비율은 지표별로 따로 센 고유 사용자 규모를 비교한 값이다. 같은 사람이 방을 열고 관리 화면을 거쳐 등록했는지를 보려면 사용자별로 이벤트를 연결해야 한다.
 
-![관리 화면 진입은 챌린지 수행 규모의 약 10%, 등록은 관리 화면 진입 규모의 약 3%였다](/assets/img/ruleup-watcher-ab-test/observed-gaps.svg)
+![관리 화면 진입은 챌린지 수행 규모의 약 10%, 등록은 관리 화면 진입 규모의 약 3%였다](/assets/img/ruleup-watcher-ab-test/observed-gaps.svg){: width="1040" height="387" }
 _당시 집계의 규모 비교. 단계별 전환율을 내려면 초대할 수 있었던 기기부터 따로 세어야 한다._
 
 방마다 초대 조건도 다르다. 챌린지를 수행한 사람에는 일반 참여자와 인증 준비를 진행 중인 사람도 포함된다. 그래서 이 집계에서는 초대할 수 있었던 사람의 규모를 따로 알기 어려웠다. 그래도 관리 화면에 들어오는 규모가 작았다는 사실은, 그 화면 안을 고치기에 앞서 **방에서 초대 기능을 어떻게 발견하는지**부터 볼 이유가 됐다.
@@ -27,7 +27,7 @@ _당시 집계의 규모 비교. 단계별 전환율을 내려면 초대할 수 
 
 ## A는 방에 두고, C는 준비 직후 한 번 알린다
 
-![A는 상시 초대 카드, C는 첫 안내 바텀시트와 작은 상시 진입점](/assets/img/ruleup-watcher-ab-test/variant-comparison.svg)
+![A는 상시 초대 카드, C는 첫 안내 바텀시트와 작은 상시 진입점](/assets/img/ruleup-watcher-ab-test/variant-comparison.svg){: width="1040" height="680" }
 _핵심 배치와 동선을 보여 주기 위해 실험 화면을 다시 그렸다._
 
 - **A · 상시 카드.** 방 상단에 ‘친구에게 응원 부탁하기’ 카드와 초대 버튼을 둔다. 나중에 초대하고 싶어졌을 때 방을 다시 열면 같은 자리에서 찾을 수 있다.
@@ -43,11 +43,11 @@ _핵심 배치와 동선을 보여 주기 위해 실험 화면을 다시 그렸�
 
 <div class="d-flex flex-wrap justify-content-center gap-3 my-3">
   <figure class="text-center" style="flex: 1 1 160px; max-width: 220px;">
-    <img src="/assets/img/ruleup-watcher-ab-test/figma-a-room.png" width="360" height="800" loading="lazy" alt="방 상단의 상시 초대 카드">
+    <img src="/assets/img/ruleup-watcher-ab-test/figma-a-room.png" width="360" height="800" alt="방 상단의 상시 초대 카드">
     <figcaption>방을 열면 상단에서 친구에게 응원을 부탁할 수 있다.</figcaption>
   </figure>
   <figure class="text-center" style="flex: 1 1 160px; max-width: 220px;">
-    <img src="/assets/img/ruleup-watcher-ab-test/figma-a-share.png" width="360" height="800" loading="lazy" alt="공유 전 친구가 받는 정보를 안내하는 화면">
+    <img src="/assets/img/ruleup-watcher-ab-test/figma-a-share.png" width="360" height="800" alt="공유 전 친구가 받는 정보를 안내하는 화면">
     <figcaption>공유하기 전에 친구에게 어떤 알림이 가는지 보여 준다. 이 확인 화면은 두 안에 공통으로 적용한다.</figcaption>
   </figure>
 </div>
@@ -56,15 +56,15 @@ _핵심 배치와 동선을 보여 주기 위해 실험 화면을 다시 그렸�
 
 <div class="d-flex flex-wrap justify-content-center gap-3 my-3">
   <figure class="text-center" style="flex: 1 1 160px; max-width: 220px;">
-    <img src="/assets/img/ruleup-watcher-ab-test/figma-c-intro.png" width="360" height="800" loading="lazy" alt="인증 준비 완료 배지가 붙은 첫 초대 안내">
+    <img src="/assets/img/ruleup-watcher-ab-test/figma-c-intro.png" width="360" height="800" alt="인증 준비 완료 배지가 붙은 첫 초대 안내">
     <figcaption>인증 준비를 마치면 첫 안내가 뜬다.</figcaption>
   </figure>
   <figure class="text-center" style="flex: 1 1 160px; max-width: 220px;">
-    <img src="/assets/img/ruleup-watcher-ab-test/figma-c-pending.png" width="360" height="800" loading="lazy" alt="초대 링크를 만든 뒤 방에 표시되는 수락 대기 카드">
+    <img src="/assets/img/ruleup-watcher-ab-test/figma-c-pending.png" width="360" height="800" alt="초대 링크를 만든 뒤 방에 표시되는 수락 대기 카드">
     <figcaption>링크를 만든 뒤 방에서 수락을 기다리는 상태를 볼 수 있다.</figcaption>
   </figure>
   <figure class="text-center" style="flex: 1 1 160px; max-width: 220px;">
-    <img src="/assets/img/ruleup-watcher-ab-test/figma-c-connected.png" width="360" height="800" loading="lazy" alt="친구가 초대를 수락한 뒤 방에 표시되는 연결 완료 카드">
+    <img src="/assets/img/ruleup-watcher-ab-test/figma-c-connected.png" width="360" height="800" alt="친구가 초대를 수락한 뒤 방에 표시되는 연결 완료 카드">
     <figcaption>친구가 수락하면 방에 연결 상태가 표시된다.</figcaption>
   </figure>
 </div>
@@ -75,7 +75,7 @@ A와 C 모두 기존 화면을 바꾼 안이다. 이 실험에서 답할 질문�
 
 Amplitude에서 인증 준비가 끝난 방을 연 방장에게 기기 ID 기준으로 A와 C를 50:50 배정한다. 같은 실험에서는 같은 기기에 같은 안이 돌아간다. 화면을 다시 열거나 앱을 재시작할 때마다 안이 바뀌면 어느 화면이 행동에 영향을 줬는지 가리기 어렵기 때문이다. 새 실험을 시작할 때만 다시 배정한다.
 
-![준비된 방에 들어온 기기를 배정한 뒤 화면 노출을 따로 기록하고 7일 안의 초대 생성 성공을 집계하는 흐름](/assets/img/ruleup-watcher-ab-test/measurement-window.svg)
+![준비된 방에 들어온 기기를 배정한 뒤 화면 노출을 따로 기록하고 7일 안의 초대 생성 성공을 집계하는 흐름](/assets/img/ruleup-watcher-ab-test/measurement-window.svg){: width="1040" height="410" }
 
 | 구분 | 무엇을 세는가 | 왜 보는가 |
 | --- | --- | --- |
@@ -106,7 +106,7 @@ C의 클릭만 늘고 초대 생성률이 비슷하다면, 안내를 알아차�
 
 스테이징에서 A와 C를 각각 실행해 배정, 화면 노출, 초대 생성 성공이 Amplitude의 QA 프로젝트에 들어오는 것을 확인했다. C에서 인증 준비를 끝낸 뒤 바로 들어왔는데도 기존 방 재진입으로 기록되는 경우를 발견해 수정했다. 다시 시험했을 때 완료 배지가 뜨고, 노출 이벤트에도 `new_ready`가 들어왔다.
 
-![에뮬레이터에서 촬영한 C의 첫 안내와 인증 준비 완료 배지](/assets/img/ruleup-watcher-ab-test/app-c-ready.png){: width="1080" height="760" loading="lazy" }
+![에뮬레이터에서 촬영한 C의 첫 안내와 인증 준비 완료 배지](/assets/img/ruleup-watcher-ab-test/app-c-ready.png){: width="1080" height="760" }
 _Android QA 앱에서 인증 준비 직후 방을 열었을 때 실제로 표시된 C 안내다._
 
 이 글은 실험을 설계하고 측정 경로를 검증한 기록이다. 글을 쓰는 시점에 운영 실험은 시작 전이라 어느 화면이 더 효과적인지는 아직 모른다. 운영 결과를 볼 때는 처음 정한 질문인 **“준비가 끝난 방장이 7일 안에 친구에게 보낼 초대를 만들었나”**로 돌아가면 된다.
