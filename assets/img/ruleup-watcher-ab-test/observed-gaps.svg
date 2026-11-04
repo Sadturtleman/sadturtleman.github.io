@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 387" role="img" aria-labelledby="title desc" font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif">
+  <title id="title">출시 전 감시자 기능의 두 관측 비율</title>
+  <desc id="desc">관리 화면 진입은 챌린지 수행 규모의 약 10%, 등록은 관리 화면 진입 규모의 약 3%였다. 독립 집계를 비교한 값이다.</desc>
+  <rect x="0" y="0" width="1040" height="387" rx="28" fill="#f3f5fb"/>
+  <text x="44" y="60" font-size="20" fill="#5033c8" font-weight="750">출시 전 관측</text>
+  <text x="44" y="105" font-size="36" fill="#182033" font-weight="800">기능을 본 규모가 작았다</text>
+  <rect x="44" y="136" width="462" height="172" rx="22" fill="#ffffff" stroke="#d9deed" stroke-width="2"/>
+  <text x="69" y="180" font-size="25" fill="#182033" font-weight="750">감시자 관리 화면 진입</text>
+  <text x="69" y="240" font-size="47" fill="#5033c8" font-weight="800">약 10%</text>
+  <rect x="250" y="212" width="230" height="39" rx="19" fill="#eae4ff"/>
+  <text x="262" y="238" font-size="18" fill="#5033c8" font-weight="680">챌린지 수행 규모 대비</text>
+  <rect x="534" y="136" width="462" height="172" rx="22" fill="#ffffff" stroke="#d9deed" stroke-width="2"/>
+  <text x="559" y="180" font-size="25" fill="#182033" font-weight="750">감시자 등록</text>
+  <text x="559" y="240" font-size="47" fill="#076963" font-weight="800">약 3%</text>
+  <rect x="740" y="212" width="230" height="39" rx="19" fill="#d9f0eb"/>
+  <text x="752" y="238" font-size="18" fill="#076963" font-weight="680">관리 화면 진입 규모 대비</text>
+  <text x="44" y="359" font-size="20" fill="#4f5a72" font-weight="500">지표별 고유 사용자 규모를 비교했다. 단계별 전환율은 별도 추적이 필요하다.</text>
+</svg>

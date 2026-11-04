@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1040 680" role="img" aria-labelledby="title desc" font-family="'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic',sans-serif">
+  <title id="title">감시자 초대 실험 시안 A와 C</title>
+  <desc id="desc">A는 방 상단에서 항상 큰 초대 카드를 보여 준다. C는 첫 진입 때 바텀시트를 띄우고 이후 작은 초대 진입점을 유지한다. 인증 준비 직후에는 완료 배지가 붙는다.</desc>
+  <rect x="0" y="0" width="1040" height="680" rx="28" fill="#f3f5fb"/>
+  <text x="43" y="55" font-size="20" fill="#5033c8" font-weight="750">화면 비교</text>
+  <text x="43" y="98" font-size="33" fill="#182033" font-weight="800">방에서 발견하게 할까, 준비 직후 알려 줄까?</text>
+  <text x="82" y="139" font-size="23" fill="#5033c8" font-weight="750">A · 방에 상시 카드</text>
+  <text x="568" y="139" font-size="23" fill="#076963" font-weight="750">C · 첫 안내 + 작은 진입점</text>
+  <rect x="82" y="155" width="390" height="462" rx="28" fill="#fff" stroke="#c9d0e3" stroke-width="2"/>
+  <rect x="96" y="169" width="362" height="114" rx="19" fill="#302455"/>
+  <text x="116" y="209" font-size="20" fill="#e9deff" font-weight="650">‹   나의 챌린지</text>
+  <text x="116" y="250" font-size="28" fill="#fff" font-weight="800">아침 루틴</text>
+  <rect x="109" y="296" width="336" height="39" rx="18" fill="#f0edf7"/>
+  <text x="127" y="322" font-size="17" fill="#4f5a72" font-weight="600">정보                 피드                 랭킹</text>
+  <rect x="109" y="351" width="336" height="167" rx="20" fill="#f2edff" stroke="#ddd0fd" stroke-width="2"/>
+  <text x="127" y="391" font-size="24" fill="#182033" font-weight="800">친구에게 응원 부탁하기</text>
+  <text x="127" y="423" font-size="16" fill="#4f5a72" font-weight="500">루틴 실패가 확정되면 친구에게 알려요.</text>
+  <rect x="127" y="449" width="300" height="48" rx="12" fill="#5033c8"/>
+  <text x="236" y="479" font-size="20" fill="#fff" font-weight="750">친구 초대</text>
+  <rect x="109" y="532" width="336" height="60" rx="15" fill="#f4f5fa"/>
+  <text x="127" y="570" font-size="19" fill="#4f5a72" font-weight="650">오늘 내 인증</text>
+  <rect x="568" y="155" width="390" height="462" rx="28" fill="#fff" stroke="#c9d0e3" stroke-width="2"/>
+  <rect x="582" y="169" width="362" height="114" rx="19" fill="#302455"/>
+  <text x="602" y="209" font-size="20" fill="#e9deff" font-weight="650">‹   나의 챌린지</text>
+  <text x="602" y="250" font-size="28" fill="#fff" font-weight="800">아침 루틴</text>
+  <rect x="595" y="296" width="336" height="39" rx="18" fill="#f0edf7"/>
+  <text x="613" y="322" font-size="17" fill="#4f5a72" font-weight="600">정보                 피드                 랭킹</text>
+  <rect x="595" y="351" width="336" height="62" rx="16" fill="#eaf5f2" stroke="#b9dcd5" stroke-width="2"/>
+  <text x="611" y="390" font-size="21" fill="#076963" font-weight="780">응원 친구 초대</text>
+  <text x="898" y="390" font-size="25" fill="#076963" font-weight="800">›</text>
+  <rect x="582" y="428" width="362" height="175" rx="20" fill="#fff" stroke="#c9d0e3" stroke-width="2"/>
+  <rect x="600" y="445" width="139" height="28" rx="13" fill="#eae4ff"/>
+  <text x="612" y="465" font-size="15" fill="#5033c8" font-weight="750">인증 준비 완료</text>
+  <text x="600" y="497" font-size="22" fill="#182033" font-weight="800">친구에게 응원 부탁하기</text>
+  <rect x="600" y="518" width="326" height="37" rx="10" fill="#5033c8"/>
+  <text x="701" y="544" font-size="17" fill="#fff" font-weight="750">친구 초대하기</text>
+  <text x="734" y="582" font-size="17" fill="#4f5a72" font-weight="650">나중에</text>
+  <text x="83" y="651" font-size="20" fill="#4f5a72" font-weight="500">방에 들어올 때마다 보인다.</text>
+  <text x="569" y="651" font-size="20" fill="#4f5a72" font-weight="500">안내를 닫아도 진입점은 남는다.</text>
+</svg>
